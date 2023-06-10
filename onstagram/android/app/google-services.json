@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "856324315235",
+    "project_id": "social-app-d0c88",
+    "storage_bucket": "social-app-d0c88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856324315235:android:da2d5dc50b856b551a8056",
+        "android_client_info": {
+          "package_name": "com.example.onstagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856324315235-jbn75rouu6kr0fkbdbq8drolsa85fj50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSuvxTPEX8aNXWhqPdCJxuBuIMPQNG_TU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856324315235-jbn75rouu6kr0fkbdbq8drolsa85fj50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

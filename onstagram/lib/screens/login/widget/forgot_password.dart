@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:onstagram/common/button_components.dart';
 import 'package:onstagram/screens/login/login_screens.dart';
 
+import '../../../common/formfield_components.dart';
+
 class ForgotPassWord extends StatefulWidget {
   const ForgotPassWord({super.key});
 

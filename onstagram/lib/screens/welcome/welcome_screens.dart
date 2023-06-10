@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onstagram/screens/login/login_screens.dart';
 import 'package:onstagram/screens/signup/signup_screens.dart';
 
 import '../../common/button_components.dart';
+import '../../cubits/login/login_cubit.dart';
+import '../../cubits/signup/signup_cubit.dart';
+import '../../repositories/auth_repository.dart';
 
 class WelcomeScreens extends StatelessWidget {
   const WelcomeScreens({super.key});
 
+  static Page<void> page() => const MaterialPage<void>(child: WelcomeScreens());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
