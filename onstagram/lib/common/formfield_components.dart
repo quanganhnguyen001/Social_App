@@ -1,33 +1,77 @@
 import 'package:flutter/material.dart';
 
-class FormFieldComponent extends StatelessWidget {
-  const FormFieldComponent({
-    Key? key,
-    required this.title,
-    required this.hide,
-    this.onChanged,
-  }) : super(key: key);
-  final String title;
-  final bool hide;
+import '../config/const.dart';
+
+class FormFieldComponent extends StatefulWidget {
+  const FormFieldComponent(
+      {super.key,
+      this.hintText,
+      this.onChanged,
+      this.controller,
+      this.fieldKey,
+      this.labelText,
+      this.helperText,
+      this.onSaved,
+      this.validator,
+      this.onFieldSubmitted,
+      this.inputType,
+      this.isPasswordField});
+
+  final String? hintText;
   final Function(String)? onChanged;
+  final TextEditingController? controller;
+  final bool? isPasswordField;
+  final Key? fieldKey;
+  final String? labelText;
+  final String? helperText;
+  final FormFieldSetter<String>? onSaved;
+  final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onFieldSubmitted;
+  final TextInputType? inputType;
 
   @override
+  State<FormFieldComponent> createState() => _FormFieldComponentState();
+}
+
+class _FormFieldComponentState extends State<FormFieldComponent> {
+  bool _obscureText = true;
+  @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: onChanged,
-      obscureText: hide,
-      decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(16),
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: secondaryColor.withOpacity(.35),
+        borderRadius: BorderRadius.circular(3),
+      ),
+      child: TextFormField(
+        style: const TextStyle(color: primaryColor),
+        controller: widget.controller,
+        keyboardType: widget.inputType,
+        key: widget.fieldKey,
+        obscureText: widget.isPasswordField == true ? _obscureText : false,
+        onSaved: widget.onSaved,
+        validator: widget.validator,
+        onFieldSubmitted: widget.onFieldSubmitted,
+        decoration: InputDecoration(
+          border: InputBorder.none,
           filled: true,
-          fillColor: Colors.white24,
-          hintText: title,
-          hintStyle: const TextStyle(color: Colors.white),
-          border: OutlineInputBorder(
-              borderSide: const BorderSide(
-                width: 0,
-                style: BorderStyle.none,
-              ),
-              borderRadius: BorderRadius.circular(22))),
+          hintText: widget.hintText,
+          hintStyle: const TextStyle(color: secondaryColor),
+          suffixIcon: GestureDetector(
+            onTap: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
+            child: widget.isPasswordField == true
+                ? Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: _obscureText == false ? blueColor : secondaryColor,
+                  )
+                : const Text(""),
+          ),
+        ),
+      ),
     );
   }
 }

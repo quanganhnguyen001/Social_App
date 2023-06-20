@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
 
+import '../config/const.dart';
+
 class ButtonComponent extends StatelessWidget {
-  const ButtonComponent({
-    Key? key,
-    required this.title,
-    required this.color,
-    this.gradient,
-    this.backgrounColor,
-    required this.press,
-  }) : super(key: key);
-  final String title;
-  final Color color;
-  final Gradient? gradient;
-  final Color? backgrounColor;
-  final VoidCallback press;
+  final Color? color;
+  final String? text;
+  final VoidCallback? press;
+  const ButtonComponent({Key? key, this.color, this.text, this.press})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: backgrounColor,
-          borderRadius: BorderRadius.circular(22),
-          gradient: gradient),
-      child: TextButton(
-        onPressed: press,
-        child: Text(
-          title,
-          style: TextStyle(color: color),
+    return InkWell(
+      onTap: press,
+      child: Container(
+        width: double.infinity,
+        height: 40,
+        decoration:
+            BoxDecoration(color: color, borderRadius: BorderRadius.circular(3)),
+        child: Center(
+          child: Text(
+            "$text",
+            style: const TextStyle(
+                color: primaryColor, fontWeight: FontWeight.w600),
+          ),
         ),
       ),
     );
