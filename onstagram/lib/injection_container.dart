@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onstagram/features/data/user/datasource/user_remote_datasource.dart';
 import 'package:onstagram/features/data/user/datasource/user_remote_datasource_impl.dart';
@@ -14,6 +15,7 @@ import 'package:onstagram/features/domain/user/usecases/sign_in_usecases.dart';
 import 'package:onstagram/features/domain/user/usecases/sign_out_usecase.dart';
 import 'package:onstagram/features/domain/user/usecases/sign_up_usecases.dart';
 import 'package:onstagram/features/domain/user/usecases/update_user_usecases.dart';
+import 'package:onstagram/features/domain/user/usecases/upload_image_usecase.dart';
 import 'package:onstagram/features/presentation/auth/cubit/auth/auth_cubit.dart';
 import 'package:onstagram/features/presentation/auth/cubit/credential/credential_cubit.dart';
 import 'package:onstagram/features/presentation/user/get_single_user/get_single_user_cubit.dart';
@@ -72,6 +74,9 @@ Future init() async {
   getIt.registerLazySingleton(
       () => GetSingleUserUseCase(userRepository: getIt.call()));
 
+  getIt.registerLazySingleton(
+      () => UploadImageUseCase(userRepository: getIt.call()));
+
   //Repository
 
   getIt.registerLazySingleton<UserRepository>(
@@ -81,12 +86,16 @@ Future init() async {
 
   getIt.registerLazySingleton<UserRemoteDataSource>(() =>
       UserRemoteDataSourceImpl(
-          firebaseFirestore: getIt.call(), firebaseAuth: getIt.call()));
+          firebaseFirestore: getIt.call(),
+          firebaseAuth: getIt.call(),
+          firebaseStorage: getIt.call()));
 
   // Externals
   final firebaseFirestore = FirebaseFirestore.instance;
   final firebaseAuth = FirebaseAuth.instance;
+  final firebaseStorage = FirebaseStorage.instance;
 
   getIt.registerLazySingleton(() => firebaseFirestore);
   getIt.registerLazySingleton(() => firebaseAuth);
+  getIt.registerLazySingleton(() => firebaseStorage);
 }

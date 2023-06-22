@@ -2,25 +2,23 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:onstagram/common/bottom_sheet_component.dart';
+import 'package:onstagram/common/profile_widget.dart';
 import 'package:onstagram/config/const.dart';
+import 'package:onstagram/features/domain/user/entities/user_entity.dart';
 import 'package:onstagram/features/presentation/auth/cubit/auth/auth_cubit.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key, required this.currentUser});
+  final UserEntity currentUser;
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backGroundColor,
       appBar: AppBar(
         backgroundColor: backGroundColor,
-        title: const Text(
-          'Username',
+        title: Text(
+          currentUser.username.toString(),
           style: TextStyle(color: primaryColor),
         ),
         actions: [
@@ -30,14 +28,20 @@ class _ProfilePageState extends State<ProfilePage> {
                     context: context,
                     option1: 'Edit Prodfile',
                     press1: () {
-                      Navigator.pushNamed(context, PageConst.editProfilePage);
+                      Navigator.pushNamed(context, PageConst.editProfilePage,
+                          arguments: currentUser);
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
                       //         builder: (context) => EditProfile()));
                     },
-                    option2: 'Logout',
+                    option2: 'More info',
                     press2: () {
+                      Navigator.pushNamed(context, PageConst.morInfoPage,
+                          arguments: currentUser);
+                    },
+                    option3: 'Logout',
+                    press3: () {
                       BlocProvider.of<AuthCubit>(context).loggedOut();
                       Navigator.pushNamedAndRemoveUntil(
                           context, PageConst.signInPage, (route) => false);
@@ -60,13 +64,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 80,
                     decoration: const BoxDecoration(
                         color: darkGreyColor, shape: BoxShape.circle),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(40),
+                      child: profileWidget(imageUrl: currentUser.profileUrl),
+                    ),
                   ),
                   Row(
                     children: [
                       Column(
                         children: [
-                          const Text(
-                            '2',
+                          Text(
+                            currentUser.totalPosts.toString(),
                             style: TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold),
@@ -81,8 +89,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       sizeHorizontal(20),
                       Column(
                         children: [
-                          const Text(
-                            '54',
+                          Text(
+                            currentUser.totalFollowers.toString(),
                             style: TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold),
@@ -99,8 +107,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       sizeHorizontal(20),
                       Column(
                         children: [
-                          const Text(
-                            '20',
+                          Text(
+                            currentUser.totalFollowings.toString(),
                             style: TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold),
@@ -117,14 +125,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               sizeVertical(10),
-              const Text(
-                'Name',
+              Text(
+                '${currentUser.name == "" ? currentUser.username : currentUser.name}',
                 style:
                     TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
               ),
               sizeVertical(10),
-              const Text(
-                'Bio of user',
+              Text(
+                '${currentUser.bio == "" ? 'No bio yet ' : currentUser.bio}',
                 style: TextStyle(color: primaryColor),
               ),
               sizeVertical(10),

@@ -59,8 +59,9 @@ class _EditPostPageState extends State<EditPostPage> {
                 decoration: const BoxDecoration(color: secondaryColor),
               ),
               sizeVertical(10),
-              const EditProfileForm(
+              EditProfileForm(
                 title: 'Description',
+                readOnly: false,
               ),
             ],
           ),

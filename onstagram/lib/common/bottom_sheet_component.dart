@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import '../config/const.dart';
 
 class BottomSheetComponent {
-  showBottomSheetComponent(
-      {context,
-      String? option1,
-      String? option2,
-      VoidCallback? press1,
-      VoidCallback? press2}) {
+  showBottomSheetComponent({
+    context,
+    String? option1,
+    String? option2,
+    String? option3,
+    VoidCallback? press1,
+    VoidCallback? press2,
+    VoidCallback? press3,
+  }) {
     showModalBottomSheet(
         context: context,
         builder: ((context) {
           return Container(
-            height: 150,
+            height: 200,
             decoration: BoxDecoration(color: backGroundColor.withOpacity(.8)),
             child: SingleChildScrollView(
               child: Container(
@@ -44,14 +47,7 @@ class BottomSheetComponent {
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0),
                       child: GestureDetector(
-                        onTap: press1
-                        // Navigator.pushNamed(context, PageConst.editProfilePage,
-                        //     arguments: widget.currentUser);
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => EditProfile()));
-                        ,
+                        onTap: press1,
                         child: Text(
                           option1.toString(),
                           style: const TextStyle(
@@ -85,6 +81,28 @@ class BottomSheetComponent {
                       ),
                     ),
                     sizeVertical(7),
+                    const Divider(
+                      thickness: 1,
+                      color: secondaryColor,
+                    ),
+                    sizeVertical(7),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: InkWell(
+                        onTap: press3
+                        // BlocProvider.of<AuthCubit>(context).loggedOut();
+                        // Navigator.pushNamedAndRemoveUntil(
+                        //     context, PageConst.signInPage, (route) => false);
+                        ,
+                        child: Text(
+                          option3.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: primaryColor),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

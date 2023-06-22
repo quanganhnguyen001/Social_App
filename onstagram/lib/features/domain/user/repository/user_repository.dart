@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:onstagram/features/domain/user/entities/user_entity.dart';
 
 abstract class UserRepository {
@@ -21,4 +23,6 @@ abstract class UserRepository {
   Future createUser(UserEntity user);
 
   Future updateUser(UserEntity user);
+
+  Future uploadImage(File? file, bool isPost, String childName);
 }

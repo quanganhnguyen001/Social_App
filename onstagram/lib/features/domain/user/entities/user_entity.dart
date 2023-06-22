@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 class UserEntity extends Equatable {
@@ -15,6 +17,7 @@ class UserEntity extends Equatable {
   final num? totalPosts;
 
   // not store in Firebase
+  final File? imageFile;
   final String? password;
   final String? otherUId;
   const UserEntity({
@@ -30,6 +33,7 @@ class UserEntity extends Equatable {
     this.totalFollowers,
     this.totalFollowings,
     this.totalPosts,
+    this.imageFile,
     this.password,
     this.otherUId,
   });
@@ -51,6 +55,7 @@ class UserEntity extends Equatable {
       totalPosts,
       password,
       otherUId,
+      imageFile,
     ];
   }
 }

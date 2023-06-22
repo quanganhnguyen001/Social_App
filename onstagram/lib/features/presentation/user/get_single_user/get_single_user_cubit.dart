@@ -15,12 +15,16 @@ class GetSingleUserCubit extends Cubit<GetSingleUserState> {
     required this.getSingleUserUseCase,
   }) : super(GetSingleUserInitial());
 
-  Future getSingleUser(String uid) async {
+  Future getSingleUser({required String uid}) async {
     emit(GetSingleUserLoading());
     try {
       final streamResponse = getSingleUserUseCase.excute(uid);
       streamResponse.listen((event) {
-        emit(GetSingleUserSuccess(user: event.first));
+        if (event.isEmpty) {
+          emit(GetSingleUserFailed());
+        } else {
+          emit(GetSingleUserSuccess(user: event.first));
+        }
       });
     } on SocketException {
       emit(GetSingleUserFailed());

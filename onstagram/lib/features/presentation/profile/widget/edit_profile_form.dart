@@ -5,7 +5,9 @@ import '../../../../config/const.dart';
 class EditProfileForm extends StatelessWidget {
   final TextEditingController? controller;
   final String? title;
-  const EditProfileForm({Key? key, this.title, this.controller})
+  final bool readOnly;
+  const EditProfileForm(
+      {Key? key, this.title, this.controller, required this.readOnly})
       : super(key: key);
 
   @override
@@ -19,6 +21,7 @@ class EditProfileForm extends StatelessWidget {
         ),
         sizeVertical(10),
         TextFormField(
+          readOnly: readOnly,
           controller: controller,
           style: const TextStyle(color: primaryColor),
           decoration: const InputDecoration(

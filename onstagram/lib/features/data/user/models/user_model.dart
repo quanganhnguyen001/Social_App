@@ -56,7 +56,7 @@ class UserModel extends UserEntity {
       profileUrl: snapshot['profileUrl'],
       followers: List.from(snap.get('followers')),
       followings: List.from(snap.get('followings')),
-      totalFollowers: snapshot['totalFollers'],
+      totalFollowers: snapshot['totalFollowers'],
       totalFollowings: snapshot['totalFollowings'],
       totalPosts: snapshot['totalPost'],
     );
@@ -73,7 +73,7 @@ class UserModel extends UserEntity {
       'profileUrl': profileUrl,
       'followers': followers,
       'followings': followings,
-      'totalFolowers': totalFollowers,
+      'totalFollowers': totalFollowers,
       'totalFollowings': totalFollowings,
       'totalPost': totalPosts,
     };

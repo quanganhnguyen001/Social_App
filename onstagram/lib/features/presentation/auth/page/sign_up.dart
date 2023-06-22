@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:onstagram/common/button_components.dart';
 import 'package:onstagram/common/formfield_components.dart';
 import 'package:onstagram/common/toast_component.dart';
@@ -11,6 +14,8 @@ import 'package:onstagram/features/presentation/auth/cubit/auth/auth_cubit.dart'
 import 'package:onstagram/features/presentation/auth/cubit/credential/credential_cubit.dart';
 
 import 'package:onstagram/features/presentation/main_screens.dart';
+
+import '../../../../common/profile_widget.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -23,7 +28,26 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  File? _image;
   bool isLoading = false;
+
+  Future selectImage() async {
+    try {
+      final pickedFile =
+          await ImagePicker.platform.getImage(source: ImageSource.gallery);
+
+      setState(() {
+        if (pickedFile != null) {
+          _image = File(pickedFile.path);
+        } else {
+          ToastComponent().showToast(message: 'Pls Choose Image First');
+        }
+      });
+    } catch (e) {
+      ToastComponent().showToast(message: 'Some Error Occured');
+    }
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -81,19 +105,22 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           sizeVertical(15),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              selectImage();
+            },
             child: Center(
               child: Stack(
                 children: [
                   Container(
-                    height: 80,
-                    width: 80,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: secondaryColor,
-                    ),
-                    child: Image.asset('assets/images/profile_default.png'),
-                  ),
+                      height: 80,
+                      width: 80,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: secondaryColor,
+                      ),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: profileWidget(image: _image))),
                   const Positioned(
                       right: 1,
                       bottom: 1,
@@ -180,6 +207,8 @@ class _SignUpPageState extends State<SignUpPage> {
       facebookbUrl: '',
       name: '',
       profileUrl: '',
+      bio: '',
+      imageFile: _image,
     ))
         .then((value) {
       setState(() {

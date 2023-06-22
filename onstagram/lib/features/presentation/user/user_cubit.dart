@@ -33,7 +33,7 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future updateUser(UserEntity user) async {
+  Future updateUser({required UserEntity user}) async {
     emit(UserLoading());
     try {
       await updateUserUseCase.excute(user);

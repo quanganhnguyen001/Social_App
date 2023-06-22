@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:onstagram/features/data/user/datasource/user_remote_datasource.dart';
 import 'package:onstagram/features/domain/user/entities/user_entity.dart';
 import 'package:onstagram/features/domain/user/repository/user_repository.dart';
@@ -50,5 +52,10 @@ class UserRepositoryIml implements UserRepository {
   @override
   Future updateUser(UserEntity user) {
     return remoteDataSource.updateUser(user);
+  }
+
+  @override
+  Future uploadImage(File? file, bool isPost, String childName) {
+    return remoteDataSource.uploadImage(file, isPost, childName);
   }
 }
